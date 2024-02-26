@@ -1,0 +1,2 @@
+Flask==2.0.2  # For creating the HTTP app
+azure-storage-blob==12.9.0  # For interacting with Azure Blob Storage
