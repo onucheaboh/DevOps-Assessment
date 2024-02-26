@@ -1,0 +1,32 @@
+name: Package and Push Helm Chart
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  package-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Helm
+        uses: Azure/helm-setup@v1
+        with:
+          version: 'v3.7.0'
+
+      - name: Package Helm Chart
+        run: |
+          helm package <chart_directory>
+          mkdir -p helm-package
+          mv *.tgz helm-package/
+
+      - name: Push to S3 Repository
+        run: |
+          aws s3 cp helm-package/*.tgz s3://<s3_repository_url>
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
