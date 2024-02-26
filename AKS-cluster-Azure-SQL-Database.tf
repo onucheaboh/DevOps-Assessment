@@ -1,3 +1,7 @@
+provider "azurerm" {
+  features {}
+}
+
 resource "azurerm_resource_group" "assessment_resource_group" {
   name     = "aks-sql-resources"
   location = var.azure_region
@@ -28,6 +32,7 @@ resource "azurerm_kubernetes_cluster" "my_cluster" {
     service_cidr   = "10.2.0.0/24"
     pod_cidr       = "10.244.0.0/16"
   }
+
 
   resource "azurerm_sql_server" "my_sql_server" {
   name                         = "assessment-server"
