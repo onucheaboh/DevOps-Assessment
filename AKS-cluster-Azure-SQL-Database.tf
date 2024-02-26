@@ -32,7 +32,10 @@ resource "azurerm_kubernetes_cluster" "my_cluster" {
     service_cidr   = "10.2.0.0/24"
     pod_cidr       = "10.244.0.0/16"
   }
-
+  identity {
+    type = "SystemAssigned"
+  }
+}
 
   resource "azurerm_sql_server" "my_sql_server" {
   name                         = "assessment-server"
@@ -55,7 +58,4 @@ resource "azurerm_sql_database" "my_sql_database" {
 
   
 
-  identity {
-    type = "SystemAssigned"
-  }
-}
+
